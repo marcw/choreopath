@@ -16,27 +16,32 @@ perfect for pen plotters, laser cutters, and digital art.
 
 ## Usage
 
-### Track poses from video:
+### Track poses from video
+
 ```bash
 choreopath track video.mp4 tracking_data.csv
 ```
 
-### Track with custom confidence thresholds:
+### Track with custom confidence thresholds
+
 ```bash
 choreopath track video.mp4 tracking_data.csv --min-detection-confidence 0.7 --min-tracking-confidence 0.7
 ```
 
-### Generate SVG visualization:
+### Generate SVG visualization
+
 ```bash
 choreopath draw tracking_data.csv output.svg
 ```
 
-### Generate SVG with custom dimensions:
+### Generate SVG with custom dimensions
+
 ```bash
 choreopath draw tracking_data.csv output.svg --width 1920 --height 1080 --min-visibility 0.7
 ```
 
-### Analyze tracking data:
+### Analyze tracking data
+
 ```bash
 choreopath analyze tracking_data.csv --animation output.mp4 --fps 30
 ```
@@ -48,8 +53,8 @@ generated videos of dancers to create SVG that I could then plot using a pen plo
 
 See example files:
 
-![examples/fall-recovery-4.mp4](examples/fall-recovery-4.mp4)
-![examples/fall-recovery-4-animation.mp4](examples/fall-recovery-4-animation.mp4)
+[original video](examples/fall-recovery-4.mp4)
+[animated tracking data](examples/fall-recovery-4-animation.mp4)
 ![examples/fall-recovery-4.svg](examples/fall-recovery-4.svg)
 
 ## License
