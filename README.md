@@ -14,6 +14,14 @@ perfect for pen plotters, laser cutters, and digital art.
 - Create animated visualizations of pose tracking
 - Command-line interface
 
+## Installation
+
+choreopath is pushed to Pypi at each new release. You can `pip install choreopath` to install it. Beware though, some versions of Python are incompatible with it as MediaPipe isn't currently available for Python >=3.13.
+
+Instead, it is suggested to use [uv](https://docs.astral.sh/uv/) and run choreopath like this:
+
+`uvx --python 3.12 choreopath`
+
 ## Usage
 
 ### Track poses from video
@@ -55,7 +63,7 @@ See example files:
 
 [original video](examples/fall-recovery-4.mp4)
 [animated tracking data](examples/fall-recovery-4-animation.mp4)
-![examples/fall-recovery-4.svg](examples/fall-recovery-4.svg)
+![examples/fall-recovery-4.svg](https://github.com/marcw/choreopath/blob/main/examples/fall-recovery-4.svg)
 
 ## License
 
