@@ -9,6 +9,7 @@ class VideoOverlayRenderer:
     """Renders progressive pose path overlays on video frames."""
 
     def __init__(self,
+                 palette: Palette,
                  line_thickness: int = 1,
                  show_current_point: bool = True,
                  min_visibility: float = 0.5,
@@ -28,7 +29,7 @@ class VideoOverlayRenderer:
         self.paths_only = paths_only
 
         # Reuse SVGGenerator color scheme for consistency
-        self.palette = Palette()
+        self.palette = palette
 
     def _render_paths_on_frame(self, frame: np.ndarray, landmark_paths: Dict[int, List[Tuple[int, int]]]) -> None:
         """

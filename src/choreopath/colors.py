@@ -9,9 +9,20 @@ DEFAULT_PALETTE = {
     'right_leg': '#3b82f6'
 }
 
+WHITE_AND_GOLD_PALETTE = {
+    'face': '#ffffff',
+    'left_arm': '#ffd700',
+    'right_arm': '#ffffff',
+    'hips': '#ffffff',
+    'left_leg': '#ffffff',
+    'right_leg': '#ffffff'
+}
+
 class Palette:
-    def __init__(self):
+    def __init__(self, palette: str = 'default'):
         self.body_colors = DEFAULT_PALETTE
+        if palette == 'white_and_gold':
+            self.body_colors = WHITE_AND_GOLD_PALETTE
 
     def get_body_region_color(self, body_region: str) -> str:
         """Get color for a specific body region."""

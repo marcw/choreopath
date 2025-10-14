@@ -1,6 +1,6 @@
 [project]
 name = "choreopath"
-version = "1.1.0"
+version = "1.2.0"
 description = "Transform human movement into generative art. Track body poses from video and create SVG visualizations of motion trajectories"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"

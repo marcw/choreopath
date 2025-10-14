@@ -8,13 +8,13 @@ from .colors import Palette
 class SVGGenerator:
     """Generates SVG trajectories from body tracking data."""
     
-    def __init__(self, width: int = 1280, height: int = 720, show_legend: bool = True):
+    def __init__(self, palette: Palette, width: int = 1280, height: int = 720, show_legend: bool = True, ):
         self.width = width
         self.height = height
         self.show_legend = show_legend
         
         # Color scheme for different body regions
-        self.palette = Palette()
+        self.palette = palette
 
         # Hierarchical body structure mapping
         self.body_hierarchy = {
