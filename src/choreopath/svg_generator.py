@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from typing import Dict, Tuple
 from .tracking_data import TrackingData
 import mediapipe as mp
+from .colors import Palette
 
 class SVGGenerator:
     """Generates SVG trajectories from body tracking data."""
@@ -13,14 +14,7 @@ class SVGGenerator:
         self.show_legend = show_legend
         
         # Color scheme for different body regions
-        self.body_colors = {
-            'face': '#f87171',
-            'left_arm': '#fb923c',
-            'right_arm': '#facc15',
-            'hips': '#71717a',
-            'left_leg': '#06b6d4',
-            'right_leg': '#3b82f6'
-        }
+        self.palette = Palette()
 
         # Hierarchical body structure mapping
         self.body_hierarchy = {
@@ -65,23 +59,6 @@ class SVGGenerator:
             31: ["body", "left leg"],
             32: ["body", "right leg"]
         }
-    
-    def get_landmark_color(self, landmark_id: int) -> str:
-        """Get color for a specific landmark based on body region."""
-        if landmark_id <= 10:
-            return self.body_colors['face']
-        elif landmark_id in [11, 13, 15, 17, 19, 21]:
-            return self.body_colors['left_arm']
-        elif landmark_id in [12, 14, 16, 18, 20, 22]:
-            return self.body_colors['right_arm']
-        elif landmark_id in [23, 24]:
-            return self.body_colors['hips']
-        elif landmark_id in [25, 27, 29, 31]:
-            return self.body_colors['left_leg']
-        elif landmark_id in [26, 28, 30, 32]:
-            return self.body_colors['right_leg']
-        else:
-            return '#888888'  # Gray fallback
     
     def normalize_to_svg_coords(self, x: float, y: float) -> Tuple[float, float]:
         """
@@ -187,7 +164,7 @@ class SVGGenerator:
                 path_data += f" L {x:.2f} {y:.2f}"
             
             path_elem.set('d', path_data)
-            path_elem.set('stroke', self.get_landmark_color(landmark_id))
+            path_elem.set('stroke', self.palette.get_landmark_color(landmark_id))
             path_elem.set('stroke-width', '1')
             path_elem.set('fill', 'none')
             path_elem.set('opacity', '0.7')
@@ -230,12 +207,12 @@ class SVGGenerator:
         
         # Legend entries
         legend_items = [
-            ('Face', self.body_colors['face']),
-            ('Left Arm', self.body_colors['left_arm']),
-            ('Right Arm', self.body_colors['right_arm']),
-            ('Hips', self.body_colors['hips']),
-            ('Left Leg', self.body_colors['left_leg']),
-            ('Right Leg', self.body_colors['right_leg'])
+            ('Face', self.palette.get_body_region_color('face')),
+            ('Left Arm', self.palette.get_body_region_color('left_arm')),
+            ('Right Arm', self.palette.get_body_region_color('right_arm')),
+            ('Hips', self.palette.get_body_region_color('hips')),
+            ('Left Leg', self.palette.get_body_region_color('left_leg')),
+            ('Right Leg', self.palette.get_body_region_color('right_leg'))
         ]
         
         for i, (label, color) in enumerate(legend_items):

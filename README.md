@@ -48,6 +48,12 @@ choreopath draw tracking_data.csv output.svg
 choreopath draw tracking_data.csv output.svg --width 1920 --height 1080 --min-visibility 0.7
 ```
 
+### Generate an overlay video
+
+```bash
+choreopath overlay video.mp4 video-overlay.mp4
+```
+
 ### Analyze tracking data
 
 ```bash
@@ -62,9 +68,19 @@ generated videos of dancers to create SVG that I could then plot using a pen plo
 See example files:
 
 [original video](examples/fall-recovery-4.mp4)
+[overlay video](examples/fall-recovery-4-overlay.mp4)
 [animated tracking data](examples/fall-recovery-4-animation.mp4)
-![examples/fall-recovery-4.svg](https://github.com/marcw/choreopath/blob/main/examples/fall-recovery-4.svg)
+[examples/fall-recovery-4.svg](https://github.com/marcw/choreopath/blob/main/examples/fall-recovery-4.svg)
+
+## Development
+
+- Use `uv`
+- Run smoke test by using `make smoke-test`
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-This software is under a MIT license. Please see [LICENSE.md](LICENSE.md)
+This software is under a MIT license. See [LICENSE.md](LICENSE.md).

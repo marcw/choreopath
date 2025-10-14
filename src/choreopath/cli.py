@@ -4,6 +4,7 @@ import pandas as pd
 from .video import Video
 from .svg_generator import SVGGenerator
 from .tracking_data import TrackingData
+from .video_overlay_renderer import VideoOverlayRenderer
 
 @click.group()
 def cli():
@@ -15,13 +16,13 @@ def cli():
 @click.option("--min-detection-confidence", type=float, default=0.5)
 @click.option("--min-tracking-confidence", type=float, default=0.5)
 def track(src, dst, min_detection_confidence, min_tracking_confidence):
-    video = Video(src)
+    video = Video(src, min_detection_confidence, min_tracking_confidence)
     click.echo(f"Tracking poses in {src}")
     click.echo("Found {} frames".format(video.total_frames()))
     click.echo("FPS: {}".format(video.fps()))
     click.echo("Tracking poses with min detection confidence: {} and min tracking confidence: {}".format(min_detection_confidence, min_tracking_confidence))
 
-    tracking_data = video.track_poses(min_detection_confidence, min_tracking_confidence)
+    tracking_data = video.track_poses()
 
     if tracking_data:
         df = pd.DataFrame(tracking_data)
@@ -30,6 +31,8 @@ def track(src, dst, min_detection_confidence, min_tracking_confidence):
         click.echo(f"Total data points: {len(tracking_data)}")
     else:
         click.echo("No tracking data found. Check if there are people visible in the video.")
+    
+    video.close()
 
 @cli.command(help='Generate SVG trajectories from body tracking data')
 @click.argument('src', type=click.Path(exists=True, readable=True, dir_okay=False))
@@ -75,3 +78,32 @@ def analyze(src, animation, fps):
 
     click.echo(f"\nGenerating tracking data animation to: {animation}")
     tracking_data.to_animation(animation, fps)
+
+@cli.command(help='Generate video with progressive pose path overlays')
+@click.argument('video', type=click.Path(exists=True, readable=True, dir_okay=False))
+@click.argument('output', type=click.Path(writable=True, dir_okay=False))
+@click.option('--min-detection-confidence', type=float, default=0.5, help='Minimum detection confidence')
+@click.option('--min-tracking-confidence', type=float, default=0.5, help='Minimum tracking confidence')
+@click.option('--min-visibility', type=float, default=0.5, help='Minimum visibility threshold')
+@click.option('--line-thickness', type=int, default=2, help='Path line thickness in pixels')
+@click.option('--no-current-point', is_flag=True, help='Disable current position marker')
+@click.option('--paths-only', is_flag=True, help='Render only paths')
+def overlay(video, output, min_detection_confidence, min_tracking_confidence, min_visibility, line_thickness, no_current_point, paths_only):
+    click.echo(f"Generating video overlay from {video} to {output}")
+    if paths_only:
+        click.echo("Mode: Paths only (black background)")
+
+    video = Video(video, min_detection_confidence, min_tracking_confidence)
+
+    renderer = VideoOverlayRenderer(
+        line_thickness=line_thickness,
+        show_current_point=not no_current_point,
+        min_visibility=min_visibility,
+        paths_only=paths_only,
+    )
+
+    renderer.render_overlay(video=video, output_path=output)
+
+    video.close()
+
+    click.echo(f"Video overlay saved to: {output}")
