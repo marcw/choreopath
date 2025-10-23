@@ -62,7 +62,7 @@ choreopath analyze tracking_data.csv --animation output.mp4 --fps 30
 
 ## Origin Story
 
-This project was created when working on a generative art project. I used
+This project was created when working on a [generative art project](https://harmonique.one/posts/turning-ai-generated-glitchy-dance-videos-into-pen-plotted-album-art). I used
 generated videos of dancers to create SVG that I could then plot using a pen plotter.
 
 See example files:
